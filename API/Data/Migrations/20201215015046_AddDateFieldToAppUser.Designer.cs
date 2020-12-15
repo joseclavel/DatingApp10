@@ -4,14 +4,16 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201215015046_AddDateFieldToAppUser")]
+    partial class AddDateFieldToAppUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,34 +29,34 @@ namespace API.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("City")
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Country")
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("Gender")
-                        .HasColumnType("varchar(10)");
+                        .HasColumnType("char(3)");
 
                     b.Property<string>("Interests")
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("Introduction")
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("KnownAs")
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(25)");
 
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LookingFor")
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(250)");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -87,7 +89,7 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
 
