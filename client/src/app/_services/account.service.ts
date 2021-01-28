@@ -2,7 +2,7 @@ import { User } from './../_models/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,9 +11,13 @@ import { environment } from 'src/environments/environment';
 export class AccountService {
   baseUrl = environment.apiUrl;
   private currentUserSource = new ReplaySubject<User>(1);
-  currentUser$ = this.currentUserSource.asObservable();
+  currentUser$ = new Observable<User>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.currentUser$ = this.currentUserSource.asObservable();
+
+    this.getCurrentUser();
+  }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
@@ -25,6 +29,20 @@ export class AccountService {
         }
       })
     );
+  }
+
+  getCurrentUser(): User | undefined {
+    const us = localStorage.getItem('user');
+    if (us !== null)
+    {
+      const user: User = JSON.parse(us);
+      this.currentUserSource.next(user);
+      return user;
+    }
+    else {
+      this.currentUserSource.next(undefined);
+    }
+    return undefined;
   }
 
   register(model: any){
