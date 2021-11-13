@@ -6,7 +6,10 @@
         <button class="btn btn-primary" routerLink='/members/{{member.username}}'>
           <i class="fa fa-user"></i>
         </button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" [swal]="{ title: 'Save file as...', input: 'text', showDenyButton: true, denyButtonText: 'Don\'t save', showCancelButton: true }"
+        (confirm)="saveFile($event)"
+        (deny)="handleDenial()"
+        (dismiss)="handleDismiss($event)">
           <i class="fa fa-heart"></i>
         </button>
         <button class="btn btn-primary">
